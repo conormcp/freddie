@@ -42,13 +42,13 @@ func (s Server) handleAPI() http.HandlerFunc {
 			case "papers":
 				ctx, _ = s.repo.NewContext(ctx, r)
 				d := []core.Paper{}
-				s.repo.FindAll(ctx, nil, &d)
+				s.repo.FindAll(ctx, nil, &d, "-added")
 				json.NewEncoder(w).Encode(d)
 				return
 			case "meetings":
 				ctx, _ = s.repo.NewContext(ctx, r)
 				d := []core.Meeting{}
-				s.repo.FindAll(ctx, nil, &d)
+				s.repo.FindAll(ctx, nil, &d, "date")
 				json.NewEncoder(w).Encode(d)
 				return
 			default:
