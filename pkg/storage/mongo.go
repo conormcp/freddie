@@ -54,11 +54,11 @@ func (r MongoRepository) Find(ctx context.Context, id core.ID, result interface{
 }
 
 // FindAll fetches all meetings from the database. YES.. ALL! be careful.
-func (r MongoRepository) FindAll(ctx context.Context, selector interface{}, result interface{}) error {
+func (r MongoRepository) FindAll(ctx context.Context, selector interface{}, result interface{}, sort string) error {
 	session, coll := r.fromContext(ctx)
 	defer session.Close()
 
-	err := coll.Find(selector).All(result)
+	err := coll.Find(selector).Sort(sort).All(result)
 	if err != nil {
 		r.logger.Printf("error: %v\n", err)
 		return err
