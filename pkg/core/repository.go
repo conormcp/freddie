@@ -13,7 +13,7 @@ type ID interface {
 // Repository defines the API repository implementation should follow.
 type Repository interface {
 	Find(ctx context.Context, id ID, result interface{}) error
-	FindAll(ctx context.Context, selector interface{}, result interface{}) error
+	FindAll(ctx context.Context, selector interface{}, result interface{}, sort string) error
 	Delete(ctx context.Context, id ID) error
 	Update(ctx context.Context, id ID, item interface{}) error
 	Create(ctx context.Context, items ...interface{}) error
