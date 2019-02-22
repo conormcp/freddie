@@ -15,6 +15,8 @@
         <h3>{{ item.speaker }} &mdash; {{ item.affil }}</h3>
         <h4>Date: {{ formatDate(item.date) }}</h4>
         <h4>Time: {{ formatTime(item.date) }}</h4>
+        <br v-if="item.abstract" />
+        <h4 v-if="item.abstract">Abstract: {{ item.abstract }}</h4>
       </v-card-text>
     </v-card>
   </v-card>
