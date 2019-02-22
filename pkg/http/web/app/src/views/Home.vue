@@ -8,9 +8,9 @@
       ></v-carousel-item>
     </v-carousel>
     <v-container fluid>
-      <v-layout>
-        <v-flex xs12 md6 mx-2> <meetings-box /> </v-flex>
-        <v-flex xs12 md6 mx-2> <papers-box /> </v-flex>
+      <v-layout row wrap justify-space-around>
+        <v-flex xs12 sm11 md5> <meetings-box /> </v-flex>
+        <v-flex xs12 sm11 md5> <papers-box /> </v-flex>
       </v-layout>
     </v-container>
   </layout>
