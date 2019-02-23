@@ -7,9 +7,7 @@
     </v-card-title>
     <v-card v-for="item in meetings" :key="item.index" class="my-2" light>
       <v-card-title>
-        <v-btn flat :href="item.url" target="_blank" block>
-          <h2>{{ item.title }}</h2>
-        </v-btn>
+        <h2>{{ item.title }}</h2>
       </v-card-title>
       <v-card-text>
         <h3>{{ item.speaker }} &mdash; {{ item.affil }}</h3>
