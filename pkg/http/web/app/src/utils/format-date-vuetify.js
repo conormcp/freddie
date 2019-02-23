@@ -1,7 +1,10 @@
 export default function formatDateVuetify(dateString) {
   // first convert to local time
-  var d = new Date(dateString).toString();
+  var date = new Date(dateString);
   // then convert to ISO format and clip
-  d = new Date(d).toISOString();
-  return d.substr(0, 10);
+
+  var isoDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+    .toISOString()
+    .substr(0, 10);
+  return isoDate;
 }
