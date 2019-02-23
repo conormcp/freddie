@@ -19,9 +19,7 @@
             <v-divider />
             <v-card v-if="dates.includes(picker)">
               <v-card-title>
-                <v-btn flat :href="currentMeeting.url" target="_blank" block>
-                  <h2>{{ currentMeeting.title }}</h2>
-                </v-btn>
+                <h2>{{ currentMeeting.title }}</h2>
               </v-card-title>
               <v-card-text>
                 <h3>
@@ -33,17 +31,7 @@
               </v-card-text>
             </v-card>
             <v-card v-else>
-              <v-card-title>
-                <v-btn
-                  flat
-                  :href="currentMeeting.url"
-                  target="_blank"
-                  block
-                  disabled
-                >
-                  <h2>No Meeting</h2>
-                </v-btn>
-              </v-card-title>
+              <v-card-title> <h2>No Meeting</h2> </v-card-title>
             </v-card>
           </v-card>
         </v-flex>
