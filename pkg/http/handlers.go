@@ -9,6 +9,7 @@ import (
 
 	"github.com/conormcp/freddie/pkg/ads"
 	"github.com/conormcp/freddie/pkg/core"
+	"github.com/globalsign/mgo/bson"
 )
 
 type Server struct {
@@ -48,7 +49,12 @@ func (s Server) handleAPI() http.HandlerFunc {
 			case "meetings":
 				ctx, _ = s.repo.NewContext(ctx, r)
 				d := []core.Meeting{}
-				s.repo.FindAll(ctx, nil, &d, "date")
+				sel := bson.M{
+					"date": bson.M{
+						"$gte": time.Now(),
+					},
+				}
+				s.repo.FindAll(ctx, sel, &d, "date")
 				json.NewEncoder(w).Encode(d)
 				return
 			default:
