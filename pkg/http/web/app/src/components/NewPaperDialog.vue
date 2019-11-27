@@ -11,7 +11,7 @@
                 label="URL"
                 v-model="url"
                 required
-                placeholder="http://adsabs.harvard.edu/..."
+                placeholder="http://ui.adsabs.harvard.edu/..."
                 :rules="[rules.ads]"
               ></v-text-field>
             </v-flex>
@@ -37,12 +37,12 @@ export default {
     url: "",
     rules: {
       ads: value =>
-        value.startsWith("http://adsabs.harvard.edu/") || "Must be an ADS URL"
+        value.includes("adsabs.harvard.edu") || "Must be an ADS URL"
     }
   }),
   computed: {
     error: function() {
-      return !this.url.startsWith("http://adsabs.harvard.edu/");
+      return !this.url.includes("adsabs.harvard.edu");
     }
   },
   methods: {
