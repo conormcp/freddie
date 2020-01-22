@@ -4,12 +4,17 @@ import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/conormcp/freddie/pkg/core"
 	web "github.com/conormcp/freddie/pkg/http"
 	"github.com/conormcp/freddie/pkg/storage"
+
+	"github.com/joho/godotenv"
+	"golang.org/x/crypto/acme/autocert"
 )
+
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	// remove/add not default ports from req.Host
@@ -28,6 +33,10 @@ func main() {
 	var port string
 	var dbURL string
 
+	godotenv.Load()
+	addr := os.Getenv("SERVER_ADDR")
+
+
 	flag.StringVar(&host, "host", "localhost", "the `host` to listen on.")
 	flag.StringVar(&port, "port", "3000", "the `port` to listen on.")
 	flag.StringVar(&dbURL, "db-url", "mongodb://localhost:27017", "database url.")
@@ -44,13 +53,21 @@ func main() {
 	httpPort := host + ":" + port
 	log.Printf("Running on host:port %s\n", httpPort)
 
+	m := &autocert.Manager{
+		Cache:      autocert.DirCache("cache"),
+		Prompt:     autocert.AcceptTOS,
+		HostPolicy: autocert.HostWhitelist(addr),
+        }
+
 	srv := &http.Server{
 		Addr:         httpPort,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		IdleTimeout:  120 * time.Second,
 		Handler:      webService.Router,
+		TLSConfig:    m.TLSConfig(),
 	}
+
 	if port == "443" || port == "https" {
 		go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 		log.Fatal(srv.ListenAndServeTLS("cert.pem", "key.pem"))
